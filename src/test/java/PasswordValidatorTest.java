@@ -3,7 +3,7 @@ import org.testng.annotations.Test;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-public class PasswordTest {
+public class PasswordValidatorTest {
     // contrasena es valida o no
     /*
         Tener más de 8 caracteres
@@ -17,7 +17,7 @@ public class PasswordTest {
     void is_password_valid () {
         String valid_password = "Aa345678_";
         String invalid_password = "kjfklds90fma";
-        Password password = new Password();
+        PasswordValidator password = new PasswordValidator();
         assertTrue(password.isValid(valid_password));
         assertFalse(password.isValid(invalid_password));
     }
@@ -25,28 +25,41 @@ public class PasswordTest {
     @Test
     void this_password_not_contain_numbers () {
         String notValidPassword = "aaaAA_bvVbfc";
-        Password password = new Password();
+        PasswordValidator password = new PasswordValidator();
         assertFalse(password.isValid(notValidPassword));
     }
 
     @Test
     void this_password_not_contain_lowercase () {
         String notValidPassword = "AAAAAAA576385_";
-        Password password = new Password();
+        PasswordValidator password = new PasswordValidator();
         assertFalse(password.isValid(notValidPassword));
     }
 
     @Test
     void this_password_not_contain_uppercase () {
         String notValidPassword = "aaaaaa65747437___";
-        Password password = new Password();
+        PasswordValidator password = new PasswordValidator();
         assertFalse(password.isValid(notValidPassword));
     }
 
     @Test
     void this_password_not_contain_underscore () {
         String notValidPassword = "frtggEWVEWRG3453434";
-        Password password = new Password();
+        PasswordValidator password = new PasswordValidator();
         assertFalse(password.isValid(notValidPassword));
+    }
+    //ITERACION 2
+    @Test
+    void this_password_pass_requirements () {
+        String validPassword = "Aa13456";
+        PasswordBuider builder = new PasswordBuider();
+        builder.withLowercase(true);
+        builder.withLength(6);
+        builder.withNumber(true);
+        builder.withUppercase(true);
+        builder.withUnderscore(false);
+        PasswordValidator passwordValidator = builder.generate();
+        assertTrue(passwordValidator.isOk(validPassword));
     }
 }
