@@ -52,14 +52,19 @@ public class PasswordValidatorTest {
     //ITERACION 2
     @Test
     void this_password_pass_requirements () {
-        String validPassword = "Aa13456";
+        String validPassword = "Aa413456_";
         PasswordBuider builder = new PasswordBuider();
         builder.withLowercase(true);
         builder.withLength(6);
         builder.withNumber(true);
         builder.withUppercase(true);
-        builder.withUnderscore(false);
+        builder.withUnderscore(true);
         PasswordValidator passwordValidator = builder.generate();
         assertTrue(passwordValidator.isOk(validPassword));
+    }
+
+    @Test
+    void this_password_havent_lowercase () {
+
     }
 }
