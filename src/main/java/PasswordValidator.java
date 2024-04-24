@@ -6,15 +6,15 @@ public class PasswordValidator {
     private int length;
     private boolean uppercase;
     private boolean lowercase;
-    private boolean haveNumber;
-    private boolean haveUnderscore;
+    private boolean number;
+    private boolean underscore;
 
-    public PasswordValidator(int length, boolean uppercase, boolean lowercase, boolean haveNumber, boolean haveUnderscore) {
+    public PasswordValidator(int length, boolean uppercase, boolean lowercase, boolean number, boolean underscore) {
         this.length = length;
         this.uppercase = uppercase;
         this.lowercase = lowercase;
-        this.haveNumber = haveNumber;
-        this.haveUnderscore = haveUnderscore;
+        this.number = number;
+        this.underscore = underscore;
     }
 
     public PasswordValidator() {
@@ -27,17 +27,17 @@ public class PasswordValidator {
         return matcher.find();
     }
     // iteracion 2
-    public boolean isOk(String password) {
+    public boolean isValidPassword(String password) {
 
         if(password.length() < this.length()) return false;
-        if(this.isUppercase() && !haveUpperCase(password)) return false;
-        if(this.isLowercase() && !haveLowerCase(password)) return false;
-        if(this.isHaveNumber() && !haveNumber(password)) return false;
-        if(this.isHaveUnderscore() && !haveUnderscore(password)) return false;
+        if(this.hasUppercase() && !hasUpperCase(password)) return false;
+        if(this.hasLowercase() && !hasLowerCase(password)) return false;
+        if(this.hasNumber() && !hasNumber(password)) return false;
+        if(this.hasUnderscore() && !hasUnderscore(password)) return false;
         return true;
     }
 
-    private boolean haveUnderscore(String password) {
+    private boolean hasUnderscore(String password) {
         String upperRequirement = "(?=.*_)";
         Pattern pattern = Pattern.compile(upperRequirement);
         Matcher matcher = pattern.matcher(password);
@@ -45,7 +45,7 @@ public class PasswordValidator {
         return true;
     }
 
-    private boolean haveNumber(String password) {
+    private boolean hasNumber(String password) {
         String upperRequirement = "(?=.*[0-9])";
         Pattern pattern = Pattern.compile(upperRequirement);
         Matcher matcher = pattern.matcher(password);
@@ -53,7 +53,7 @@ public class PasswordValidator {
         return true;
     }
 
-    private boolean haveLowerCase(String password) {
+    private boolean hasLowerCase(String password) {
         String upperRequirement = "(?=.*[a-z])";
         Pattern pattern = Pattern.compile(upperRequirement);
         Matcher matcher = pattern.matcher(password);
@@ -61,30 +61,29 @@ public class PasswordValidator {
         return true;
     }
 
-    private boolean haveUpperCase(String password) {
+    private boolean hasUpperCase(String password) {
         String upperRequirement = "(?=.*[A-Z])";
         Pattern pattern = Pattern.compile(upperRequirement);
         Matcher matcher = pattern.matcher(password);
         if(!matcher.find())return false;
         return true;
     }
-    public int length() {
-        return length;
-    }
 
-    public boolean isUppercase() {
+    public int length() { return length; }
+    public boolean hasUppercase() {
         return uppercase;
     }
 
-    public boolean isLowercase() {
+    public boolean hasLowercase() {
         return lowercase;
     }
 
-    public boolean isHaveNumber() {
-        return haveNumber;
+    public boolean hasNumber() {
+        return number;
     }
 
-    public boolean isHaveUnderscore() {
-        return haveUnderscore;
+    public boolean hasUnderscore() {
+        return underscore;
     }
+
 }

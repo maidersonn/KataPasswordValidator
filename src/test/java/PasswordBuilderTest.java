@@ -12,10 +12,10 @@ public class PasswordBuilderTest {
         builder.withUppercase(false);
         builder.withUnderscore(true);
         PasswordValidator passwordValidator = builder.generate();
-        assertTrue(passwordValidator.isLowercase());
+        assertTrue(passwordValidator.hasLowercase());
         assertEquals(5, passwordValidator.length());
-        assertTrue(passwordValidator.isHaveNumber());
-        assertFalse(passwordValidator.isUppercase());
-        assertTrue(passwordValidator.isHaveUnderscore());
+        assertTrue(passwordValidator.hasNumber());
+        assertFalse(passwordValidator.hasUppercase());
+        assertTrue(passwordValidator.hasUnderscore());
     }
 }

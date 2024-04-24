@@ -1,7 +1,6 @@
 import org.testng.annotations.Test;
 
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 public class PasswordValidatorTest {
     // contrasena es valida o no
@@ -60,11 +59,6 @@ public class PasswordValidatorTest {
         builder.withUppercase(true);
         builder.withUnderscore(true);
         PasswordValidator passwordValidator = builder.generate();
-        assertTrue(passwordValidator.isOk(validPassword));
-    }
-
-    @Test
-    void this_password_havent_lowercase () {
-
+        assertTrue(passwordValidator.isValidPassword(validPassword));
     }
 }
