@@ -44,7 +44,11 @@ public class PasswordValidator {
         if (this.hasNumber() && !hasNumber(password)) errors.add("No contiene número");
         if (this.hasUnderscore() && !hasUnderscore(password)) errors.add("No contiene barra baja");
 
-
+        if (errors.isEmpty()) {
+            return new Success<>(Boolean.TRUE);
+        } else {
+            return new Failure<>(errors);
+        }
     }
 
     private boolean hasUnderscore(String password) {

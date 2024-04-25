@@ -72,7 +72,8 @@ public class PasswordValidatorTest {
         builder.withUnderscore(true);
         PasswordValidator passwordValidator = builder.generate();
 
-        assertEquals(1,passwordValidator.isValidPassword(password).size());
-        assertEquals("No contiene mayúscula", passwordValidator.isValidPassword(password).get(0));
+        assertFalse(passwordValidator.isValidPassword(password).isSuccess());
+        assertEquals(1,passwordValidator.isValidPassword(password).getError().size());
+        assertEquals("No contiene mayúscula", passwordValidator.isValidPassword(password).getError().get(0));
     }
 }
