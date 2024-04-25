@@ -1,3 +1,10 @@
+
+import security.Failure;
+import security.Result;
+import security.Success;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,14 +34,17 @@ public class PasswordValidator {
         return matcher.find();
     }
     // iteracion 2
-    public boolean isValidPassword(String password) {
+    public Result<Boolean, List<String>> isValidPassword(String password) {
 
-        if(password.length() < this.length()) return false;
-        if(this.hasUppercase() && !hasUpperCase(password)) return false;
-        if(this.hasLowercase() && !hasLowerCase(password)) return false;
-        if(this.hasNumber() && !hasNumber(password)) return false;
-        if(this.hasUnderscore() && !hasUnderscore(password)) return false;
-        return true;
+        ArrayList<String> errors = new ArrayList<>();
+
+        if (password.length() < this.length()) errors.add("Largo inválido");
+        if (this.hasUppercase() && !hasUpperCase(password)) errors.add("No contiene mayúscula");
+        if (this.hasLowercase() && !hasLowerCase(password)) errors.add("No contiene minúscula");
+        if (this.hasNumber() && !hasNumber(password)) errors.add("No contiene número");
+        if (this.hasUnderscore() && !hasUnderscore(password)) errors.add("No contiene barra baja");
+
+
     }
 
     private boolean hasUnderscore(String password) {

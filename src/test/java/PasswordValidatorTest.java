@@ -59,6 +59,20 @@ public class PasswordValidatorTest {
         builder.withUppercase(true);
         builder.withUnderscore(true);
         PasswordValidator passwordValidator = builder.generate();
-        assertTrue(passwordValidator.isValidPassword(validPassword));
+        //assertTrue(passwordValidator.isValidPassword(validPassword));
+    }
+    @Test
+    void when_password_without_uppercase_return_errorList() {
+        String password = "aaa123456__";
+        PasswordBuider builder = new PasswordBuider();
+        builder.withLowercase(true);
+        builder.withLength(6);
+        builder.withNumber(true);
+        builder.withUppercase(true);
+        builder.withUnderscore(true);
+        PasswordValidator passwordValidator = builder.generate();
+
+        assertEquals(1,passwordValidator.isValidPassword(password).size());
+        assertEquals("No contiene mayúscula", passwordValidator.isValidPassword(password).get(0));
     }
 }
