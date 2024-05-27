@@ -59,10 +59,13 @@ public class PasswordValidatorTest {
         builder.withUppercase(true);
         builder.withUnderscore(true);
         PasswordValidator passwordValidator = builder.generate();
-        //assertTrue(passwordValidator.isValidPassword(validPassword));
+        PasswordValidatorStrategy stategy = new PasswordValidatorStrategy();
+        passwordValidator.setStrategy(stategy);
+        assertTrue(passwordValidator.doSomething(validPassword).isSuccess());
     }
+    //Iteration 4
     @Test
-    void when_password_without_uppercase_return_errorList() {
+    void when_password_without_uppercase_return_true() {
         String password = "aaa123456__";
         PasswordBuider builder = new PasswordBuider();
         builder.withLowercase(true);
@@ -72,8 +75,29 @@ public class PasswordValidatorTest {
         builder.withUnderscore(true);
         PasswordValidator passwordValidator = builder.generate();
 
-        assertFalse(passwordValidator.isValidPassword(password).isSuccess());
-        assertEquals(1,passwordValidator.isValidPassword(password).getError().size());
-        assertEquals("No contiene mayúscula", passwordValidator.isValidPassword(password).getError().get(0));
+        PasswordValidatorStrategy stategy = new PasswordValidatorStrategy();
+        passwordValidator.setStrategy(stategy);
+
+        assertTrue(passwordValidator.doSomething(password).isSuccess());
+    }
+
+    @Test
+    void when_password_without_uppercase_and_without_underscore_return_errorList() {
+        String password = "aaa12345698";
+        PasswordBuider builder = new PasswordBuider();
+        builder.withLowercase(true);
+        builder.withLength(6);
+        builder.withNumber(true);
+        builder.withUppercase(true);
+        builder.withUnderscore(true);
+        PasswordValidator passwordValidator = builder.generate();
+
+        PasswordValidatorStrategy stategy = new PasswordValidatorStrategy();
+        passwordValidator.setStrategy(stategy);
+
+        assertFalse(passwordValidator.doSomething(password).isSuccess());
+        assertEquals(2, passwordValidator.doSomething(password).getError().size());
+        assertEquals("No contiene mayúscula", passwordValidator.doSomething(password).getError().get(0));
+        assertEquals("No contiene barra baja", passwordValidator.doSomething(password).getError().get(1));
     }
 }
